@@ -1,5 +1,10 @@
+import { setRouter } from "../router/router.js";
+
+// Set Router
+setRouter();
+
 //Backend URL
-const url = "http://localhost/backend-techcare/public";
+const backendURL = "http://localhost/backend-techcare/public";
 
 //Notfications
 function successNotification(message, seconds = 0) {
@@ -24,4 +29,4 @@ function errorNotification(message, seconds = 0) {
   }, seconds * 1000);
 }
 
-export { url, successNotification, errorNotification };
+export { backendURL, successNotification, errorNotification };
