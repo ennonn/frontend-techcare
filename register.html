@@ -16,7 +16,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <script src="js/auth/register.js" defer></script>
+    <script src="js/auth/register.js" type="module"></script>
   </head>
   <body class="bg-secondary">
     <div id="layoutAuthentication">
@@ -32,8 +32,15 @@
                     </h3>
                   </div>
                   <div class="card-body">
+                    <!-- Notfications -->
+                    <div class="alert alert-success d-none" role="alert">
+                      A simple success alert—check it out!
+                    </div>
+                    <div class="alert alert-danger d-none" role="alert">
+                      A simple danger alert—check it out!
+                    </div>
                     <!-- Registration Form -->
-                    <form id="form-register">
+                    <form id="form_register">
                       <div class="row mb-3">
                         <div class="col-md-6">
                           <div class="form-floating mb-3 mb-md-0">
@@ -109,7 +116,10 @@
                       </div>
                       <div class="mt-4 mb-0">
                         <div class="d-grid">
-                          <button class="btn btn-dark btn-block" type="submit">
+                          <button
+                            class="btn btn-dark btn-block d-flex align-items-center justify-content-center"
+                            type="submit"
+                          >
                             Create Account
                           </button>
                         </div>
@@ -133,7 +143,7 @@
             <div
               class="d-flex align-items-center justify-content-between small"
             >
-              <div class="text-muted">Copyright &copy; Your Website 2023</div>
+              <div class="text-muted">Copyright &copy; TechCare 2023</div>
               <div>
                 <a href="#">Privacy Policy</a>
                 &middot;
