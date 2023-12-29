@@ -62,7 +62,7 @@
             aria-labelledby="navbarDropdown"
           >
             <!-- <li><hr class="dropdown-divider" /></li> -->
-            <li><a class="dropdown-item" href="#!">Logout</a></li>
+            <li><a class="dropdown-item" href="" id="btn_logout">Logout</a></li>
           </ul>
         </li>
       </ul>
@@ -118,10 +118,10 @@
         <main>
           <!-- Content -->
           <div class="container-fluid px-4">
-            <h1 class="mt-4">Slides</h1>
+            <h1 class="mt-4">Medicines</h1>
             <ol class="breadcrumb mb-4">
               <li class="breadcrumb-item">System</li>
-              <li class="breadcrumb-item active">Slides</li>
+              <li class="breadcrumb-item active">Medicines</li>
             </ol>
             <div class="row">
               <!-- Modal Btn and Form -->
@@ -140,7 +140,7 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <h1 class="modal-title fs-5" id="staticBackdropLabel">
-                          Slides Form
+                          Medicine Form
                         </h1>
                         <button
                           type="button"
@@ -155,27 +155,28 @@
                         <div class="modal-body">
                           <!-- User Id Field -->
                           <input type="hidden" name="user_id" id="user_id" />
-                          <!-- Slide Name Field -->
+                          <!-- Medicine Name Field -->
                           <div class="row mb-3">
                             <div class="col-sm-12">
                               <input
                                 class="form-control"
                                 type="text"
-                                name="carousel_name"
-                                id="carousel_name"
-                                placeholder="Slide Name"
+                                name="medicine_name"
+                                id="medicine_name"
+                                placeholder="Medicines Name"
                                 required
                               />
                             </div>
                           </div>
-                          <!-- Image File Field -->
+                          <!-- Manufacturer File Field -->
                           <div class="row mb-3">
                             <div class="col-sm-12">
                               <input
                                 class="form-control"
-                                type="file"
-                                name="image_path"
-                                accept="image/*"
+                                type="text"
+                                name="manufacturer"
+                                id="manufacturer"
+                                placeholder="Manufacturer"
                                 required
                               />
                             </div>
@@ -183,13 +184,38 @@
                           <!-- Description Field -->
                           <div class="row mb-3">
                             <div class="col-sm-12">
-                              <textarea
+                              <input
                                 class="form-control"
-                                name="description"
-                                id="description"
-                                placeholder="Description"
+                                type="text"
+                                name="expirydate"
+                                id="expirydate"
+                                placeholder="Expiry Date"
                                 required
-                              ></textarea>
+                              />
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <div class="col-sm-12">
+                              <input
+                                class="form-control"
+                                type="text"
+                                name="quantity"
+                                id="quantity"
+                                placeholder="Quantity"
+                                required
+                              />
+                            </div>
+                          </div>
+                          <div class="row mb-3">
+                            <div class="col-sm-12">
+                              <input
+                                class="form-control"
+                                type="text"
+                                name="price"
+                                id="price"
+                                placeholder="Price"
+                                required
+                              />
                             </div>
                           </div>
                         </div>
@@ -242,7 +268,7 @@
                         data-bs-toggle="modal"
                         data-bs-target="#form_modal"
                       >
-                        Add Slide
+                        Add Medicine
                       </button>
                       <!-- End Button trigger modal  -->
                     </div>
@@ -281,7 +307,7 @@
           <!-- End of Content -->
         </main>
         <!-- Footer -->
-        <footer class="py-4 bg-dark mt-auto">
+        <footer class="py-4 bg-primary mt-auto">
           <div class="container-fluid px-4">
             <div class="d-flex align-items-center justify-content-center small">
               <div class="text-white">Copyright &copy; TechCare 2023</div>
