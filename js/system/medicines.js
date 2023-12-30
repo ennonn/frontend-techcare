@@ -10,7 +10,7 @@ import {
 getLoggedUser();
 
 // // Get Admin Pages
-// showNavAdminPages();
+showNavAdminPages();
 
 // Get All Data
 getDatas();
@@ -78,14 +78,14 @@ async function getDatas() {
     document.getElementById("get_data").innerHTML = container;
 
     // Assign click event on Edit Btns
-    // document.querySelectorAll("#btn_edit").forEach((element) => {
-    //   element.addEventListener("click", editAction);
-    // });
+    document.querySelectorAll("#btn_edit").forEach((element) => {
+      element.addEventListener("click", editAction);
+    });
 
-    // // Assign click event on Delete Btns
-    // document.querySelectorAll("#btn_delete").forEach((element) => {
-    //   element.addEventListener("click", deleteAction);
-    // });
+    // Assign click event on Delete Btns
+    document.querySelectorAll("#btn_delete").forEach((element) => {
+      element.addEventListener("click", deleteAction);
+    });
   } else {
     alert("HTTP Error:" + response.status);
   }
@@ -121,14 +121,14 @@ async function getDatas() {
 // }
 
 // // Search Form
-// const form_search = document.getElementById("form_search");
-// form_search.onsubmit = async (e) => {
-//   e.preventDefault();
+const form_search = document.getElementById("form_search");
+form_search.onsubmit = async (e) => {
+  e.preventDefault();
 
-//   const formData = new FormData(form_search);
+  const formData = new FormData(form_search);
 
-//   getDatas("", formData.get("keyword"));
-// };
+  getDatas("", formData.get("keyword"));
+};
 
 // Submit Form Functionality; This is for Create and Update
 const form_slides = document.getElementById("form_slides");
@@ -154,29 +154,49 @@ form_slides.onsubmit = async (e) => {
 
   let response;
   // Check if for_update_id is empty, if empty then it's create, else it's update
-  // Fetch API Medicine Store Endpoint
-  response = await fetch(backendURL + "/api/medicine", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-    body: formData,
-  });
+  if (for_update_id == "") {
+    // Fetch API Medicine Store Endpoint
+    response = await fetch(backendURL + "/api/medicine", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      body: formData,
+    });
+  }
+  // for Update
+  else {
+    // Add Method Spoofing to cater Image upload coz you are using FormData; Comment if no Image upload
+    formData.append("_method", "PUT");
+    // Fetch API Carousel Item Update Endpoint
+    response = await fetch(backendURL + "/api/medicine/" + for_update_id, {
+      method: "POST", // Change to PUT/PATCH if no Image Upload
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+      // Comment body below; if with Image Upload; form-data equivalent
+      body: formData,
+      // Uncomment body below; if no Image Upload; form-urlencoded equivalent
+      // body: new URLSearchParams(formData)
+    });
+  }
 
-  //   // Get response if 200-299 status code
+  // Get response if 200-299 status code
   if (response.ok) {
     // Uncomment for debugging purpose
-    const json = await response.json();
+    // const json = await response.json();
+    // console.log(json);
 
     // Reset Form
     form_slides.reset();
 
     successNotification(
-      "Successfully  created medicine"
-      //   (for_update_id == "" ? "created" : "updated") +
-      //   " slide.",
-      // 10
+      "Successfully " +
+        (for_update_id == "" ? "created" : "updated") +
+        " medicine.",
+      10
     );
 
     // Close Modal Form
@@ -185,7 +205,7 @@ form_slides.onsubmit = async (e) => {
     // Reload Page
     getDatas();
   }
-  //   // Get response if 422 status code
+  // Get response if 422 status code
   else if (response.status == 422) {
     const json = await response.json();
 
@@ -196,110 +216,109 @@ form_slides.onsubmit = async (e) => {
   }
 
   // Always reset for_update_id to empty string
-  // for_update_id = "";
+  for_update_id = "";
 
   document.querySelector("#form_slides button[type='submit']").disabled = false;
   document.querySelector("#form_slides button[type='submit']").innerHTML =
     "Submit";
 };
 
-// // Delete Functionality
-// const deleteAction = async (e) => {
-//   // Use JS Confirm to ask for confirmation; You can use bootstrap modal instead of this
-//   if (confirm("Are you sure you want to delete?")) {
-//     // Get Id from data-id attrbute within the btn_delete anchor tag
-//     const id = e.target.getAttribute("data-id");
+// Delete Functionality
+const deleteAction = async (e) => {
+  // Use JS Confirm to ask for confirmation; You can use bootstrap modal instead of this
+  if (confirm("Are you sure you want to delete?")) {
+    // Get Id from data-id attrbute within the btn_delete anchor tag
+    const id = e.target.getAttribute("data-id");
 
-//     // Background red the card that you want to delete
-//     document.querySelector(`.card[data-id="${id}"]`).style.backgroundColor =
-//       "red";
+    // Background red the card that you want to delete
+    document.querySelector(`[data-id="${id}"]`);
 
-//     // Fetch API Carousel Item Delete Endpoint
-//     const response = await fetch(backendURL + "/api/carousel/" + id, {
-//       method: "DELETE",
-//       headers: {
-//         Accept: "application/json",
-//         Authorization: "Bearer " + localStorage.getItem("token"),
-//       },
-//     });
+    // Fetch API Carousel Item Delete Endpoint
+    const response = await fetch(backendURL + "/api/medicine/" + id, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
 
-//     // Get response if 200-299 status code
-//     if (response.ok) {
-//       // Uncomment for debugging purpose
-//       // const json = await response.json();
-//       // console.log(json);
+    // Get response if 200-299 status code
+    if (response.ok) {
+      // Uncomment for debugging purpose
+      // const json = await response.json();
+      // console.log(json);
 
-//       successNotification("Successfully deleted slide.", 10);
+      successNotification("Successfully deleted medicine", 10);
 
-//       // Remove the Card from the list
-//       document.querySelector(`.card[data-id="${id}"]`).remove();
-//     }
-//     // Get response if 400+ or 500+
-//     else {
-//       errorNotification("Unable to delete!", 10);
+      // Remove the Card from the list
+      document.querySelector(`[data-id="${id}"]`).remove();
+    }
+    // Get response if 400+ or 500+
+    else {
+      errorNotification("Unable to delete!", 10);
 
-//       // Background white the card if unable to delete
-//       document.querySelector(`.card[data-id="${id}"]`).style.backgroundColor =
-//         "white";
-//     }
-//   }
-// };
+      // Background white the card if unable to delete
+      document.querySelector(`[data-id="${id}"]`);
+    }
+  }
+};
 
 // // Update Functionality
-// const editAction = async (e) => {
-//   // Get Id from data-id attrbute within the btn_edit anchor tag
-//   const id = e.target.getAttribute("data-id");
+const editAction = async (e) => {
+  // Get Id from data-id attrbute within the btn_edit anchor tag
+  const id = e.target.getAttribute("data-id");
 
-//   // Show Functionality function call
-//   showData(id);
+  // Show Functionality function call
+  showData(id);
 
-//   // Show Modal Form
-//   document.getElementById("modal_show").click();
-// };
+  // Show Modal Form
+  document.getElementById("modal_show").click();
+};
 
-// // Storage of Id of chosen data to update
-// let for_update_id = "";
+// Storage of Id of chosen data to update
+let for_update_id = "";
 
-// // Show Functionality
-// const showData = async (id) => {
-//   // Background yellow the card that you want to show
-//   document.querySelector(`.card[data-id="${id}"]`).style.backgroundColor =
-//     "yellow";
+// Show Functionality
+const showData = async (id) => {
+  // Background yellow the card that you want to show
+  document.querySelector(`[data-id="${id}"]`);
 
-//   // Fetch API Carousel Item Show Endpoint
-//   const response = await fetch(backendURL + "/api/carousel/" + id, {
-//     headers: {
-//       Accept: "application/json",
-//       Authorization: "Bearer " + localStorage.getItem("token"),
-//     },
-//   });
+  // Fetch API Carousel Item Show Endpoint
+  const response = await fetch(backendURL + "/api/medicine/" + id, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
 
-//   // Get response if 200-299 status code
-//   if (response.ok) {
-//     const json = await response.json();
-//     // console.log(json);
+  // Get response if 200-299 status code
+  if (response.ok) {
+    const json = await response.json();
+    // console.log(json);
 
-//     // Store id to a variable; id will be utilize for update
-//     for_update_id = json.carousel_item_id;
+    // Store id to a variable; id will be utilize for update
+    for_update_id = json.medicine_id;
 
-//     // Display json response to Form tags; make sure to set id attrbute on tags (input, textarea, select)
-//     document.getElementById("carousel_name").value = json.carousel_name;
-//     document.getElementById("description").value = json.description;
+    // Display json response to Form tags; make sure to set id attrbute on tags (input, textarea, select)
+    document.getElementById("medicine_name").value = json.medicine_name;
+    document.getElementById("manufacturer").value = json.manufacturer;
+    document.getElementById("expirydate").value = json.expirydate;
+    document.getElementById("quantity").value = json.quantity;
+    document.getElementById("price").value = json.price;
 
-// Change Button Text using textContent; either innerHTML or textContent is fine here
-//     document.querySelector("#form_slides button[type='submit']").textContent =
-//       "Update Info";
-//   }
-//   // Get response if 400+ or 500+
-//   else {
-//     errorNotification("Unable to show!", 10);
+    // Change Button Text using textContent; either innerHTML or textContent is fine here
+    document.querySelector("#form_slides button[type='submit']").textContent =
+      "Update Info";
+  }
+  // Get response if 400+ or 500+
+  else {
+    errorNotification("Unable to show!", 10);
 
-//     // Background white the card if unable to show
-//     document.querySelector(`.card[data-id="${id}"]`).style.backgroundColor =
-//       "white";
-//   }
-// };
-
+    // Background white the card if unable to show
+    document.querySelector(`.card[data-id="${id}"]`).style.backgroundColor =
+      "white";
+  }
+};
 // // Page Functionality
 // const pageAction = async (e) => {
 //   // Get url from data-url attrbute within the btn_paginate anchor tag
