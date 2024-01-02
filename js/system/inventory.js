@@ -16,7 +16,7 @@ showNavAdminPages();
 getDatas();
 
 async function getDatas() {
-  const response = await fetch(backendURL + "/api/medicine", {
+  const response = await fetch(backendURL + "/api/inventory", {
     headers: {
       Accept: "application/json",
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -34,45 +34,43 @@ async function getDatas() {
       const date = new Date(element.created_at).toLocaleString();
 
       container += `<div class="container">
-      <table class="table table-striped table-bordered">
-          <thead class="thead-dark">
-              <tr>
-                  <th>Medicine Name</th>
-                  <th>Manufacturer</th>
-                  <th>Expiry Date</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th>Date</th>
-                  <th>Actions</th>
-              </tr>
-          </thead>
-          <tbody id="medicineTableBody">
-              <!-- Your JavaScript/Server-side code will populate this tbody with rows -->
-              <tr>
-                  <td>${element.medicine_name}</td>
-                  <td>${element.manufacturer}</td>
-                  <td>${element.expirydate}</td>
-                  <td>${element.quantity}</td>
-                  <td>${element.price}</td>
-                  <td>${date}</td>
-                  <td>
-                      <div class="dropdown">
-                          <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-pen-to-square"></i></button>
-                          <ul class="dropdown-menu">
-                              <!-- Dropdown menu items -->
-                              <li>
-                              <a class="dropdown-item" href="#" id="btn_edit" data-id="${element.medicine_id}">Edit</a>
-                          </li>
-                          <li>
-                              <a class="dropdown-item" href="#" id="btn_delete" data-id="${element.medicine_id}">Delete</a>
-                          </li>
-                          </ul>
-                      </div>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-  </div>`;
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>Supplier ID</th>
+                <th>Medicine ID</th>
+                <th>Purchase Date</th>
+                <th>Quantity</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="medicineTableBody">
+            <!-- Your JavaScript/Server-side code will populate this tbody with rows -->
+            <tr>
+                <td>${element.supplier_id}</td>
+                <td>${element.medicine_id}</td>
+                <td>${element.purchase_date}</td>
+                <td>${element.quantity}</td>
+                <td>${date}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <ul class="dropdown-menu">
+                            <!-- Dropdown menu items -->
+                            <li>
+                            <a class="dropdown-item" href="#" id="btn_edit" data-id="${element.inventory_id}">Edit</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="#" id="btn_delete" data-id="${element.inventory_id}">Delete</a>
+                        </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>`;
     });
     // Use the container to display the fetch data
     document.getElementById("get_data").innerHTML = container;
@@ -86,40 +84,35 @@ async function getDatas() {
     document.querySelectorAll("#btn_delete").forEach((element) => {
       element.addEventListener("click", deleteAction);
     });
-  } else {
-    alert("HTTP Error:" + response.status);
+
+    //     // Get Each Json Elements and merge with Html element and put it into a container
+    // let pagination = "";
+    // // Now caters pagination; Remove below if no pagination
+    // json.links.forEach((element) => {
+    //   pagination += `<li class="page-item">
+    //                       <a class="page-link
+    //                       ${element.url == null ? " disabled" : ""}
+    //                       ${element.active ? " active" : ""}
+    //                       " href="#" id="btn_paginate" data-url="${
+    //                         element.url
+    //                       }">
+    //                           ${element.label}
+    //                       </a>
+    //                   </li>`;
+    // });
+    // // Use the container to display the fetch data
+    // document.getElementById("get_pagination").innerHTML = pagination;
+
+    // // Assign click event on Page Btns
+    // document.querySelectorAll("#btn_paginate").forEach((element) => {
+    //   element.addEventListener("click", pageAction);
+    // });
+  }
+  // Get response if 400+ or 500+ status code
+  else {
+    errorNotification("HTTP-Error: " + response.status);
   }
 }
-
-//     // Get Each Json Elements and merge with Html element and put it into a container
-//     let pagination = "";
-//     // Now caters pagination; Remove below if no pagination
-//     json.links.forEach((element) => {
-//       pagination += `<li class="page-item">
-//                           <a class="page-link
-//                           ${element.url == null ? " disabled" : ""}
-//                           ${element.active ? " active" : ""}
-//                           " href="#" id="btn_paginate" data-url="${
-//                             element.url
-//                           }">
-//                               ${element.label}
-//                           </a>
-//                       </li>`;
-//     });
-//     // Use the container to display the fetch data
-//     document.getElementById("get_pagination").innerHTML = pagination;
-
-//     // Assign click event on Page Btns
-//     document.querySelectorAll("#btn_paginate").forEach((element) => {
-//       element.addEventListener("click", pageAction);
-//     });
-//   }
-//   // Get response if 400+ or 500+ status code
-//   else {
-//     errorNotification("HTTP-Error: " + response.status);
-//   }
-// }
-
 // // Search Form
 const form_search = document.getElementById("form_search");
 form_search.onsubmit = async (e) => {
@@ -141,8 +134,8 @@ form_slides.onsubmit = async (e) => {
   document.querySelector(
     "#form_slides button[type='submit']"
   ).innerHTML = `<div class="spinner-border me-2" role="status">
-                          </div>
-                          <span>Loading...</span>`;
+                        </div>
+                        <span>Loading...</span>`;
 
   // Get Values of Form (input, textarea, select) set it as form-data
   const formData = new FormData(form_slides);
@@ -156,7 +149,7 @@ form_slides.onsubmit = async (e) => {
   // Check if for_update_id is empty, if empty then it's create, else it's update
   if (for_update_id == "") {
     // Fetch API Medicine Store Endpoint
-    response = await fetch(backendURL + "/api/medicine", {
+    response = await fetch(backendURL + "/api/inventory", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -170,7 +163,7 @@ form_slides.onsubmit = async (e) => {
     // Add Method Spoofing to cater Image upload coz you are using FormData; Comment if no Image upload
     formData.append("_method", "PUT");
     // Fetch API Carousel Item Update Endpoint
-    response = await fetch(backendURL + "/api/medicine/" + for_update_id, {
+    response = await fetch(backendURL + "/api/inventory/" + for_update_id, {
       method: "POST", // Change to PUT/PATCH if no Image Upload
       headers: {
         Accept: "application/json",
@@ -195,7 +188,7 @@ form_slides.onsubmit = async (e) => {
     successNotification(
       "Successfully " +
         (for_update_id == "" ? "created" : "updated") +
-        " medicine.",
+        " inventory stocks.",
       10
     );
 
@@ -223,7 +216,7 @@ form_slides.onsubmit = async (e) => {
     "Submit";
 };
 
-// // Delete Functionality
+// Delete Functionality
 const deleteAction = async (e) => {
   // Use JS Confirm to ask for confirmation; You can use bootstrap modal instead of this
   if (confirm("Are you sure you want to delete?")) {
@@ -234,7 +227,7 @@ const deleteAction = async (e) => {
     document.querySelector(`[data-id="${id}"]`);
 
     // Fetch API Carousel Item Delete Endpoint
-    const response = await fetch(backendURL + "/api/medicine/" + id, {
+    const response = await fetch(backendURL + "/api/inventory/" + id, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -245,10 +238,10 @@ const deleteAction = async (e) => {
     // Get response if 200-299 status code
     if (response.ok) {
       // Uncomment for debugging purpose
-      const json = await response.json();
-      console.log(json);
+      // const json = await response.json();
+      // console.log(json);
 
-      successNotification("Successfully deleted medicine.", 10);
+      successNotification("Successfully deleted inventory", 10);
 
       // Remove the Card from the list
       document.querySelector(`[data-id="${id}"]`).remove();
@@ -259,8 +252,6 @@ const deleteAction = async (e) => {
 
       // Background white the card if unable to delete
       document.querySelector(`[data-id="${id}"]`);
-
-      getDatas();
     }
   }
 };
@@ -286,7 +277,7 @@ const showData = async (id) => {
   document.querySelector(`[data-id="${id}"]`);
 
   // Fetch API Carousel Item Show Endpoint
-  const response = await fetch(backendURL + "/api/medicine/" + id, {
+  const response = await fetch(backendURL + "/api/inventory/" + id, {
     headers: {
       Accept: "application/json",
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -299,14 +290,13 @@ const showData = async (id) => {
     // console.log(json);
 
     // Store id to a variable; id will be utilize for update
-    for_update_id = json.medicine_id;
+    for_update_id = json.inventory_id;
 
     // Display json response to Form tags; make sure to set id attrbute on tags (input, textarea, select)
-    document.getElementById("medicine_name").value = json.medicine_name;
-    document.getElementById("manufacturer").value = json.manufacturer;
-    document.getElementById("expirydate").value = json.expirydate;
+    document.getElementById("supplier_id").value = json.supplier_id;
+    document.getElementById("medicine_id").value = json.medicine_id;
+    document.getElementById("purchase_date").value = json.purchase_date;
     document.getElementById("quantity").value = json.quantity;
-    document.getElementById("price").value = json.price;
 
     // Change Button Text using textContent; either innerHTML or textContent is fine here
     document.querySelector("#form_slides button[type='submit']").textContent =
@@ -321,7 +311,7 @@ const showData = async (id) => {
       "white";
   }
 };
-// // Page Functionality
+// Page Functionality
 // const pageAction = async (e) => {
 //   // Get url from data-url attrbute within the btn_paginate anchor tag
 //   const url = e.target.getAttribute("data-url");
@@ -329,3 +319,30 @@ const showData = async (id) => {
 //   // Refresh card list
 //   getDatas(url);
 // };
+
+const btn_logout = document.getElementById("btn_logout");
+btn_logout.onclick = async () => {
+  // Access Logout API Endpoint
+  const response = await fetch(backendURL + "/api/logout", {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    },
+  });
+
+  // Get response if 200-299 status code
+  if (response.ok) {
+    // Clear Tokens
+    localStorage.clear();
+
+    successNotification("Logout Successful.");
+    // Redirect Page
+    window.location.pathname = "/";
+  }
+  // Get response if 400 or 500 status code
+  else {
+    const json = await response.json();
+
+    errorNotification(json.message, 10);
+  }
+};

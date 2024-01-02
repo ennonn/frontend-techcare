@@ -16,7 +16,7 @@ showNavAdminPages();
 getDatas();
 
 async function getDatas() {
-  const response = await fetch(backendURL + "/api/medicine", {
+  const response = await fetch(backendURL + "/api/stock", {
     headers: {
       Accept: "application/json",
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -37,11 +37,10 @@ async function getDatas() {
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
             <tr>
-                <th>Medicine Name</th>
-                <th>Manufacturer</th>
-                <th>Expiry Date</th>
+                <th>Inventory ID</th>
+                <th>Branch ID</th>
+                <th>Movement Type</th>
                 <th>Quantity</th>
-                <th>Price</th>
                 <th>Date</th>
                 <th>Actions</th>
             </tr>
@@ -49,11 +48,10 @@ async function getDatas() {
         <tbody id="medicineTableBody">
             <!-- Your JavaScript/Server-side code will populate this tbody with rows -->
             <tr>
-                <td>${element.medicine_name}</td>
-                <td>${element.manufacturer}</td>
-                <td>${element.expirydate}</td>
+                <td>${element.inventory_id}</td>
+                <td>${element.branch_id}</td>
+                <td>${element.movement_type}</td>
                 <td>${element.quantity}</td>
-                <td>${element.price}</td>
                 <td>${date}</td>
                 <td>
                     <div class="dropdown">
@@ -61,10 +59,10 @@ async function getDatas() {
                         <ul class="dropdown-menu">
                             <!-- Dropdown menu items -->
                             <li>
-                            <a class="dropdown-item" href="#" id="btn_edit" data-id="${element.medicine_id}">Edit</a>
+                            <a class="dropdown-item" href="#" id="btn_edit" data-id="${element.stock_id}">Edit</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#" id="btn_delete" data-id="${element.medicine_id}">Delete</a>
+                            <a class="dropdown-item" href="#" id="btn_delete" data-id="${element.stock_id}">Delete</a>
                         </li>
                         </ul>
                     </div>
@@ -152,7 +150,7 @@ form_slides.onsubmit = async (e) => {
   // Check if for_update_id is empty, if empty then it's create, else it's update
   if (for_update_id == "") {
     // Fetch API Medicine Store Endpoint
-    response = await fetch(backendURL + "/api/medicine", {
+    response = await fetch(backendURL + "/api/stock", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -166,7 +164,7 @@ form_slides.onsubmit = async (e) => {
     // Add Method Spoofing to cater Image upload coz you are using FormData; Comment if no Image upload
     formData.append("_method", "PUT");
     // Fetch API Carousel Item Update Endpoint
-    response = await fetch(backendURL + "/api/medicine/" + for_update_id, {
+    response = await fetch(backendURL + "/api/stock/" + for_update_id, {
       method: "POST", // Change to PUT/PATCH if no Image Upload
       headers: {
         Accept: "application/json",
@@ -191,7 +189,7 @@ form_slides.onsubmit = async (e) => {
     successNotification(
       "Successfully " +
         (for_update_id == "" ? "created" : "updated") +
-        " medicine.",
+        " stocks.",
       10
     );
 
@@ -230,7 +228,7 @@ const deleteAction = async (e) => {
     document.querySelector(`[data-id="${id}"]`);
 
     // Fetch API Carousel Item Delete Endpoint
-    const response = await fetch(backendURL + "/api/medicine/" + id, {
+    const response = await fetch(backendURL + "/api/stock/" + id, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -244,7 +242,7 @@ const deleteAction = async (e) => {
       // const json = await response.json();
       // console.log(json);
 
-      successNotification("Successfully deleted medicine", 10);
+      successNotification("Successfully deleted stock", 10);
 
       // Remove the Card from the list
       document.querySelector(`[data-id="${id}"]`).remove();
@@ -280,7 +278,7 @@ const showData = async (id) => {
   document.querySelector(`[data-id="${id}"]`);
 
   // Fetch API Carousel Item Show Endpoint
-  const response = await fetch(backendURL + "/api/medicine/" + id, {
+  const response = await fetch(backendURL + "/api/stock/" + id, {
     headers: {
       Accept: "application/json",
       Authorization: "Bearer " + localStorage.getItem("token"),
@@ -293,14 +291,13 @@ const showData = async (id) => {
     // console.log(json);
 
     // Store id to a variable; id will be utilize for update
-    for_update_id = json.medicine_id;
+    for_update_id = json.stock_id;
 
     // Display json response to Form tags; make sure to set id attrbute on tags (input, textarea, select)
-    document.getElementById("medicine_name").value = json.medicine_name;
-    document.getElementById("manufacturer").value = json.manufacturer;
-    document.getElementById("expirydate").value = json.expirydate;
+    document.getElementById("inventory_id").value = json.inventory_id;
+    document.getElementById("branch_id").value = json.branch_id;
+    document.getElementById("movement_type").value = json.movement_type;
     document.getElementById("quantity").value = json.quantity;
-    document.getElementById("price").value = json.price;
 
     // Change Button Text using textContent; either innerHTML or textContent is fine here
     document.querySelector("#form_slides button[type='submit']").textContent =
