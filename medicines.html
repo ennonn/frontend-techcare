@@ -32,7 +32,7 @@
     <!-- Top Navigation -->
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-primary">
       <!-- Navbar Brand-->
-      <a class="navbar-brand ps-3" href="index.html">TechCare</a>
+      <a class="navbar-brand ps-5" href="index.html">TechCare</a>
       <!-- Sidebar Toggle-->
       <button
         class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
@@ -74,7 +74,10 @@
     <div id="layoutSidenav">
       <!-- Side Navigation -->
       <div id="layoutSidenav_nav">
-        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <nav
+          class="px-4 sb-sidenav accordion sb-sidenav-dark"
+          id="sidenavAccordion"
+        >
           <div class="sb-sidenav-menu">
             <div class="nav">
               <a class="nav-link" href="dashboard.html">
@@ -88,12 +91,12 @@
               <div id="nav_admin_pages"></div>
 
               <div class="sb-sidenav-menu-heading">Pages</div>
-              <!-- <a class="nav-link" href="">
+              <a class="nav-link" href="register.html">
                 <div class="sb-nav-link-icon">
                   <i class="fas fa-file-clipboard"></i>
                 </div>
-                Activity logs
-              </a> -->
+                New User
+              </a>
               <a class="nav-link active" href="medicines.html">
                 <div class="sb-nav-link-icon">
                   <i class="fa-solid fa-prescription-bottle-medical"></i>
@@ -106,7 +109,7 @@
                 </div>
                 Supplier
               </a>
-              <a class="nav-link" href="stocks.html">
+              <!-- <a class="nav-link" href="stocks.html">
                 <div class="sb-nav-link-icon">
                   <i class="fa-solid fa-cubes"></i>
                 </div>
@@ -117,7 +120,7 @@
                   <i class="fa-solid fa-code-branch"></i>
                 </div>
                 Branch
-              </a>
+              </a> -->
               <a class="nav-link" href="inventory.html">
                 <div class="sb-nav-link-icon">
                   <i class="fa-solid fa-warehouse"></i>
@@ -219,9 +222,9 @@
                               <input
                                 class="form-control"
                                 type="text"
-                                name="quantity"
-                                id="quantity"
-                                placeholder="Quantity"
+                                name="unit"
+                                id="unit"
+                                placeholder="Unit"
                                 required
                               />
                             </div>

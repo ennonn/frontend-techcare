@@ -37,10 +37,10 @@ async function getDatas() {
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
             <tr>
-                <th>Medicine Name</th>
+                <th>Medicines Name</th>
                 <th>Manufacturer</th>
                 <th>Expiry Date</th>
-                <th>Quantity</th>
+                <th>Unit</th>
                 <th>Price</th>
                 <th>Date</th>
                 <th>Actions</th>
@@ -52,7 +52,7 @@ async function getDatas() {
                 <td>${element.medicine_name}</td>
                 <td>${element.manufacturer}</td>
                 <td>${element.expirydate}</td>
-                <td>${element.quantity}</td>
+                <td>${element.unit}</td>
                 <td>${element.price}</td>
                 <td>${date}</td>
                 <td>
@@ -299,7 +299,7 @@ const showData = async (id) => {
     document.getElementById("medicine_name").value = json.medicine_name;
     document.getElementById("manufacturer").value = json.manufacturer;
     document.getElementById("expirydate").value = json.expirydate;
-    document.getElementById("quantity").value = json.quantity;
+    document.getElementById("unit").value = json.unit;
     document.getElementById("price").value = json.price;
 
     // Change Button Text using textContent; either innerHTML or textContent is fine here
