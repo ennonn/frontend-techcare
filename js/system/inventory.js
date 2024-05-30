@@ -54,18 +54,20 @@ async function getDatas() {
                 <td>${element.quantity}</td>
                 <td>${date}</td>
                 <td>
-                    <div class="dropdown">
-                        <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <ul class="dropdown-menu">
-                            <!-- Dropdown menu items -->
-                            <li>
-                            <a class="dropdown-item" href="#" id="btn_edit" data-id="${element.inventory_id}">Edit</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#" id="btn_delete" data-id="${element.inventory_id}">Delete</a>
-                        </li>
-                        </ul>
-                    </div>
+                <div class="dropdown my-dropdown">
+                <button class="btn btn-outline-secondary btn-sm dropdown-toggle my-dropdown-button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <ul class="dropdown-menu my-dropdown-menu">
+                    <!-- Dropdown menu items -->
+                    <li>
+                        <a class="dropdown-item" href="#" id="btn_edit" data-id="${element.inventory_id}">Edit</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" id="btn_delete" data-id="${element.inventory_id}">Delete</a>
+                    </li>
+                </ul>
+            </div>
                 </td>
             </tr>
         </tbody>

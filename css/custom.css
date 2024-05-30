@@ -49,3 +49,17 @@
 .form-floating input:focus + label {
   color: #095d7e !important; /* Text color of the label on focus */
 }
+
+/* Your CSS code here */
+.my-dropdown-button:hover {
+  color: #000; /* Text color of the input field on focus */
+  border-color: #095d7e !important; /* Change to your desired color */
+}
+.my-dropdown-menu:hover {
+  border-color: #095d7e !important; /* Change to your desired color */
+}
+.my-dropdown-menu .dropdown-item:hover {
+  background-color: #e9f5ff; /* Background color of the input field on focus */
+  color: #000; /* Text color of the input field on focus */
+  border-color: #095d7e !important; /* Change to your desired color */
+}
