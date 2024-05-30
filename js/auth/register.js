@@ -11,7 +11,7 @@ form_register.onsubmit = async (e) => {
   e.preventDefault();
 
   //   // Disable Button
-  document.querySelector("#form_register button").disabled = false;
+  document.querySelector("#form_register button").disabled = true;
   document.querySelector(
     "#form_register button"
   ).innerHTML = `<div class="spinner-border me-2" role="status">
