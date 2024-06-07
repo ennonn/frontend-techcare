@@ -4,7 +4,7 @@ import { setRouter } from "../router/router.js";
 setRouter();
 
 //Backend URL
-const backendURL = "http://localhost/backend-techcare/public";
+const backendURL = " https://3427-216-247-44-68.ngrok-free.app";
 
 //Notfications
 function successNotification(message, seconds = 0) {
